@@ -8,7 +8,6 @@ boston = City.new()
 miami = City.new()
 phoenix = City.new()
 st_louis = City.new()
-nashville = City.new()
 louisville = City.new()
 atlanta = City.new()
 los_angeles = City.new()
@@ -16,7 +15,8 @@ san_fransisco = City.new()
 portland = City.new()
 salt_lake_city = City.new()
 boise = City.new()
-minneapolis = City.new()
+ocean_city = City.new()
+st_charles = City.new()
 =end
 
 # Setup all the genes
@@ -26,14 +26,17 @@ genes = [
 	Gene.new( City.new("Seattle, WA", 47.65,-122.3) ),
 	Gene.new( City.new("Chicago, IL", 41.7833,-87.75) ),
 	Gene.new( City.new("Houston, TX", 29.9667,-95.35) ),
-	Gene.new( City.new("Dallas, TX", 32.85,-96.85) )
-]
+	Gene.new( City.new("Dallas, TX", 32.85,-96.85) ),
+	Gene.new( City.new("Kennebunkport, ME",43.364627,-70.475063) ),
+	Gene.new( City.new("Joliet, IL",41.53017,-88.080826) ),
+	Gene.new( City.new("Minneapolis, MN", 44.991998,-93.262939) )]
+	Gene.new( City.new("San Fransisco, CA",37.6167, -122.383))
 
 # Limit the number of generations
-generations = 100
+max_generations = 100
 
 # Population size
-population_size = 10
+population_size = 50
 
 # Fitness function for TSP
 measure_fitness = proc do |genes|
@@ -57,8 +60,40 @@ measure_fitness = proc do |genes|
 	distance
 end
 
-# Build the population
-population = Population.new(genes,population_size,measure_fitness)
+# Build the initial population
+population = Population.new(genes,population_size,measure_fitness,[])
+
+# Begin iterating through the generations
+max_generations.times do 
+
+	# Create a seed population that will be used to see the next generation
+	seed = []
+
+	# Get the top two fittest parents from the population
+	parent1 = population.first_fittest 
+	parent2 = population.second_fittest 
+
+	# Reproduce with the top parents
+	child1 = parent1.reproduce parent2
+	child2 = parent2.reproduce parent1
+
+	# Add the parents to the seed for the next population
+	seed.push parent1
+	seed.push parent2
+
+	# Add the children to the seed for the next population
+	#seed.push child1
+	#seed.push child2
+	
+	population = Population.new(genes, population_size,measure_fitness,seed)
+end
+
+
+
+
+
+
+
 
 =begin
 Evolver.run(
@@ -69,7 +104,6 @@ Evolver.run(
 	:crossover_probability => 85,
 	:mutation_probability => 5
 )
-=end
 
 #PP.pp( population )
 puts population
@@ -84,15 +118,9 @@ parent2 = population.second_fittest
 
 child1 = parent1.recombine(parent2)
 child2 = parent2.recombine(parent1)
+=end
 
 
 
 
-# Loop through the chromosone population
-#population.each do |chromosone|
-	
-#	chromosone.fitness_function = measure_distance
 
-#	puts chromosone.fitness
-
-#end

@@ -14,6 +14,22 @@ class Chromosone
 		@fitness ||= @fitness_function.call( @genes ) # The equals/or caches the fitness value
 	end
 
+	def reproduce chromosone
+		#recombine
+		#mutate
+	end
+
+	# Compare the fitness of this chromosone and another. should return -1, 0, or 1
+	def <=>(c)
+		return fitness <=> c.fitness
+	end
+
+	def to_s
+		return "Fitness: #{fitness} Route: #{ @genes } \n"
+	end
+
+	private
+
 	# Recombine with another chromosone to for a new one - reproduction
 	def recombine chromosone
 		
@@ -23,15 +39,6 @@ class Chromosone
 	def mutate genes
 
 	end
-
-	# Compare the fitness of this chromosone and another. should return -1, 0, or 1
-	def <=>(c)
-		return fitness <=> c.fitness
-	end
-
-	def to_s
-		return "Fitness: #{fitness} \n Route: #{ @genes }"
-	end
-
+	
 end
 

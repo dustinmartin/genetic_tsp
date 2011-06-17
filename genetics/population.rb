@@ -1,16 +1,23 @@
 require_relative 'chromosone'
 
 class Population
-	def initialize genes,size,fitness_function #, base_population
+	def initialize genes,size,fitness_function,seed
 		@population = []
-		
-		# cull_limit = base_population.size
-		# cull_population
-		# load_base_population
 		build(genes, size, fitness_function )
 		sort
 	end
 	
+	# Removes the least fit from the population
+	def cull limit
+		limit.times do
+			@population.pop
+		end
+	end
+
+	def size
+		@population.size
+	end
+
 	def each 
 		@population.each do |x|
 			yield x
@@ -36,6 +43,10 @@ class Population
 	end
 
 	private
+
+	def seed_population population
+
+	end
 
 	def build genes, size, fitness_function
 		# Build the population
