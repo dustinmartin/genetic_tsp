@@ -1,23 +1,6 @@
-require 'pp'
 require_relative 'tsp/city'
 require_relative 'genetics/gene'
 require_relative 'genetics/population'
-
-=begin
-boston = City.new()
-miami = City.new()
-phoenix = City.new()
-st_louis = City.new()
-louisville = City.new()
-atlanta = City.new()
-los_angeles = City.new()
-san_fransisco = City.new()
-portland = City.new()
-salt_lake_city = City.new()
-boise = City.new()
-ocean_city = City.new()
-st_charles = City.new()
-=end
 
 # Setup all the genes
 genes = [
@@ -87,40 +70,3 @@ max_generations.times do
 	
 	population = Population.new(genes, population_size,measure_fitness,seed)
 end
-
-
-
-
-
-
-
-
-=begin
-Evolver.run(
-	:genes => genes, 
-	:population_size => 50,
-	:max_generations => 100,
-	:fitness_function => measure_fitness,
-	:crossover_probability => 85,
-	:mutation_probability => 5
-)
-
-#PP.pp( population )
-puts population
-puts
-puts
-puts population.first_fittest
-puts population.second_fittest
-
-
-parent1 = population.first_fittest
-parent2 = population.second_fittest
-
-child1 = parent1.recombine(parent2)
-child2 = parent2.recombine(parent1)
-=end
-
-
-
-
-
