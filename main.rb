@@ -22,7 +22,7 @@ max_generations = 100
 population_size = 50
 
 # Fitness function for TSP
-measure_fitness = proc do |genes|
+measure_fitness = lambda do |genes|
 	distance = 0
 	
 	# Loop through the genes
