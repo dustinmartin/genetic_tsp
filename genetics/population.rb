@@ -1,8 +1,8 @@
 require_relative 'chromosone'
 
 class Population
-	def initialize genes,size,fitness_function,seed
-		@population = []
+	def initialize genes,size,fitness_function,seed=[]
+		@population = seed
 		build(genes, size, fitness_function )
 		sort
 	end
@@ -51,9 +51,9 @@ class Population
 	def build genes, size, fitness_function
 		# Build the population
 		size.times do
-			# if population.size <= size
-			@population.push Chromosone.new( genes.shuffle, fitness_function) 
-			# end
+			if @population.size < size
+				@population.push Chromosone.new( genes.shuffle, fitness_function) 
+			end
 		end
 	end
 end

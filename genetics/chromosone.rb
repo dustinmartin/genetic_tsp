@@ -21,11 +21,11 @@ class Chromosone
 
 	# Compare the fitness of this chromosone and another. should return -1, 0, or 1
 	def <=>(c)
-		return fitness <=> c.fitness
+		fitness <=> c.fitness
 	end
 
 	def to_s
-		return "Fitness: #{fitness} Route: #{ @genes } \n"
+		"Fitness: #{fitness} Route: #{ @genes } \n"
 	end
 
 	private

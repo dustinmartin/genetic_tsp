@@ -16,7 +16,7 @@ genes = [
 	Gene.new( City.new("San Fransisco, CA",37.6167, -122.383))
 
 # Limit the number of generations
-max_generations = 100
+max_generations = 30
 
 # Population size
 population_size = 50
@@ -25,7 +25,7 @@ population_size = 50
 measure_fitness = lambda do |genes|
 	distance = 0
 	
-	# Loop through the genes
+	# Loop through the genes (cities) and measure the distance
 	genes.size.times do |i|
 		unless( i == genes.size-1)
 			# Get the cities
@@ -40,14 +40,30 @@ measure_fitness = lambda do |genes|
 		end
 	end
 
+	# Get the distance from the last city back to the origin
+	last_city = genes[genes.size-1].gene_id
+	origin = genes[1].gene_id
+	distance = distance + last_city.distance_to(origin)
+
 	distance
 end
 
 # Build the initial population
 population = Population.new(genes,population_size,measure_fitness,[])
 
+#puts population
+#exit
+
 # Begin iterating through the generations
-max_generations.times do 
+max_generations.times do |i|
+	
+	puts 
+	puts
+	puts "GENERATION #{i}:"
+	puts
+	puts population.first_fittest
+	puts
+	puts "================================================================================="
 
 	# Create a seed population that will be used to see the next generation
 	seed = []
