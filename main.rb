@@ -48,11 +48,78 @@ measure_fitness = lambda do |genes|
 	distance
 end
 
+recombine_routes = lambda do |route1,route2|
+	child_route = []
+
+	while child_route.size <= route1.size do
+		
+
+
+	end
+	
+	route1.each do |gene|
+
+		# Get the city from the gene
+		city = gene.gene_id
+
+		# Get the index of the city from route1 and route2
+		route1_city_index = route1.index gene
+		route2_city_index = route2.index gene
+
+		# The next step from the city in route1 and route 2
+		route1_next_step = nil
+		route2_next_step = nil
+
+		# Add city to the child route if not already there
+		unless child_route.include? gene
+			child_route.push gene
+		end
+		
+		# Get route1's next step
+		unless route1_city_index >= route1.size
+			route1_next_step = route1[route1_city_index+1]
+		end
+
+		# Get route2's next step
+		unless route2_city_index >= route2.size
+			route2_next_step = route2[route2_city_index+1]
+		end
+
+	end
+
+
+
+
+	route1.size.times do |i|
+		
+		gene = route1[i]
+		city = gene.gene_id
+
+		# Add city to the child route if not already there
+		unless child_route.include? gene
+			child_route.push gene
+		end
+
+		# From the current city, check which parent has the closest next step
+		unless i >= route1.size
+			# Get the next city in route1
+			next_city = route1[i+1].gene_id
+			
+			# Get the distance between the two
+			distance = city.distance_to(next_city)
+		end
+
+		# Get the index of the city in route 2
+		route2_index = route2.index(gene)
+	end
+end
+
+mutate_route = lambda do |city|
+
+end
+
 # Build the initial population
 population = Population.new(genes,population_size,measure_fitness,[])
-
-#puts population
-#exit
 
 # Begin iterating through the generations
 max_generations.times do |i|
@@ -73,8 +140,20 @@ max_generations.times do |i|
 	parent2 = population.second_fittest 
 
 	# Reproduce with the top parents
-	child1 = parent1.reproduce parent2
-	child2 = parent2.reproduce parent1
+	#child1 = parent1.recombine parent2
+	#child2 = parent2.recombine parent1
+
+	cloned_child1 = parent1.clone
+	cloned_child2 = parent2.clone
+
+	mutated_child1 = parent1.clone
+	mutated_child2 = parent2.clone
+
+	mutated_child1.mutate
+	mutated_child2.mutate
+
+	# puts child1
+	# puts child1 after mutation
 
 	# Add the parents to the seed for the next population
 	seed.push parent1
@@ -84,5 +163,28 @@ max_generations.times do |i|
 	#seed.push child1
 	#seed.push child2
 	
-	population = Population.new(genes, population_size,measure_fitness,seed)
+	#population = Population.new(genes, population_size,measure_fitness,seed)
+
+	puts
+	puts "Cloned Child 1"
+	puts cloned_child1
+	puts
+	
+	puts
+	puts "Cloned Child 2"
+	puts cloned_child2
+	puts
+
+	puts
+	puts "Mutated Child 1"
+	puts mutated_child1
+	puts
+
+	puts
+	puts "Mutated Child 2"
+	puts mutated_child2
+	puts
+
+	sleep(4)
+
 end

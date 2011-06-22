@@ -8,11 +8,11 @@ class Population
 	end
 	
 	# Removes the least fit from the population
-	def cull limit
-		limit.times do
-			@population.pop
-		end
-	end
+	#def cull limit
+	#	limit.times do
+	#		@population.pop
+	#	end
+	#end
 
 	def size
 		@population.size
